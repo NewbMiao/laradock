@@ -70,6 +70,8 @@ services:
         dockerfile: "Dockerfile-${PHP_VERSION}"
       volumes_from:
         - applications
+      volumes: #xdebug日志存放于logs/php-fpm目录
+        - ./logs/php-fpm/:/tmp/xdebug_log
       expose:
         - "9000"
       depends_on:
