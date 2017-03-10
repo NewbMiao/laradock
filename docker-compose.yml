@@ -7,7 +7,7 @@ services:
     applications:
         image: tianon/true
         volumes:
-            - ../:/var/www
+            - ../website:/var/www #website目录与laradock同级，用于存放多个project
 #            - ../sample/:/var/www/sample
 
 ### Workspace Utilities Container ###########################
@@ -24,7 +24,7 @@ services:
                 - INSTALL_DRUSH=false
                 - INSTALL_AEROSPIKE_EXTENSION=false
                 - INSTALL_V8JS_EXTENSION=false
-                - COMPOSER_GLOBAL_INSTALL=false
+                - COMPOSER_GLOBAL_INSTALL=true
                 - INSTALL_WORKSPACE_SSH=false
                 - INSTALL_LARAVEL_ENVOY=false
                 - INSTALL_DEPLOYER=false
@@ -34,7 +34,7 @@ services:
                 - PGID=1000
                 - NODE_VERSION=stable
                 - YARN_VERSION=latest
-                - TZ=UTC
+                - TZ=PRC
         volumes_from:
             - applications
         extra_hosts:
@@ -43,6 +43,8 @@ services:
         ports:
            - "2222:22"
         tty: true
+        environment:
+           - APP_ENV=local
 
 ### PHP-FPM Container #######################################
 
@@ -64,6 +66,8 @@ services:
             dockerfile: Dockerfile-70
         volumes_from:
             - applications
+        volumes: #xdebug日志存放于logs/php-fpm目录
+            - ./logs/php-fpm/:/tmp/xdebug_log
         expose:
             - "9000"
         links:
