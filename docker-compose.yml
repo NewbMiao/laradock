@@ -39,6 +39,7 @@ services:
             - applications
         extra_hosts:
             # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
+            # tips: for mac,use the ip in `ifconfig en0` 
             - "dockerhost:172.16.30.192"
         ports:
            - "2222:22"
@@ -59,7 +60,7 @@ services:
                 - INSTALL_BCMATH=false
                 - INSTALL_PHPREDIS=false
                 - INSTALL_MEMCACHED=false
-                - INSTALL_OPCACHE=false
+                - INSTALL_OPCACHE=true
                 - INSTALL_EXIF=false
                 - INSTALL_AEROSPIKE_EXTENSION=false
                 - CODEIGNITER=false
@@ -73,7 +74,7 @@ services:
         links:
             - workspace
         extra_hosts:
-            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
+            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts) 
             - "dockerhost:172.16.30.192"
         environment:
             # IMPORTANT: Set the Remote Interpreter entry matching name to `laravel`

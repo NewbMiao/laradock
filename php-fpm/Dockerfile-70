@@ -186,6 +186,9 @@ RUN if [ ${CODEIGNITER} = true ]; then \
      docker-php-ext-install tokenizer \
 ;fi
 
+# DIY MY EXTENSISON
+RUN docker-php-ext-install sockets
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
