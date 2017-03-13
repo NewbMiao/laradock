@@ -39,8 +39,9 @@ services:
             - applications
         extra_hosts:
             # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
-            # tips: for mac,use the ip in `ifconfig en0` 
-            - "dockerhost:172.16.30.192"
+            # tips: for mac,use the ip in `ipconfig getifaddr en0`  
+            # or set a host ip http://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container/39026136#39026136
+            - "dockerhost:192.168.33.16"
         ports:
            - "2222:22"
         tty: true
@@ -75,7 +76,7 @@ services:
             - workspace
         extra_hosts:
             # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts) 
-            - "dockerhost:172.16.30.192"
+            - "dockerhost:192.168.33.16"
         environment:
             # IMPORTANT: Set the Remote Interpreter entry matching name to `laravel`
             - PHP_IDE_CONFIG=serverName=laravel
