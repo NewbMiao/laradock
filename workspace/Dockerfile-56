@@ -73,13 +73,6 @@ ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #####################################
-# 替换源
-#####################################
-RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list \
-    && apt-get update --fix-missing \
-    && apt-get -y upgrade
-
-#####################################
 # Composer:
 #####################################
 
@@ -89,9 +82,6 @@ COPY ./composer.json /home/laradock/.composer/composer.json
 # Make sure that ~/.composer belongs to laradock
 RUN chown -R laradock:laradock /home/laradock/.composer
 USER laradock
-
-# 替换源
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 # Check if global install need to be ran
 ARG COMPOSER_GLOBAL_INSTALL=false
