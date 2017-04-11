@@ -27,9 +27,11 @@ WORKSPACE_INSTALL_LARAVEL_ENVOY=false
 WORKSPACE_INSTALL_DEPLOYER=false
 WORKSPACE_INSTALL_LINUXBREW=false
 WORKSPACE_INSTALL_MC=false
+WORKSPACE_INSTALL_SYMFONY=false
 WORKSPACE_PUID=1000
 WORKSPACE_PGID=1000
 WORKSPACE_NODE_VERSION=stable
+WORKSPACE_YARN_VERSION=latest
 WORKSPACE_TIMEZONE=PRC
 WORKSPACE_SSH_PORT=2222
 
@@ -45,7 +47,9 @@ PHP_FPM_INSTALL_MEMCACHED=false
 PHP_FPM_INSTALL_OPCACHE=true
 PHP_FPM_INSTALL_EXIF=false
 PHP_FPM_INSTALL_AEROSPIKE_EXTENSION=false
-PHP_FPM_INSTALL_MYSQLI=true
+PHP_FPM_INSTALL_MYSQLI=false
+PHP_FPM_INSTALL_MYSQL=false
+PHP_FPM_INSTALL_MSSQL=false
 PHP_FPM_INSTALL_TOKENIZER=false
 PHP_FPM_INSTALL_INTL=false
 
@@ -69,11 +73,17 @@ MYSQL_PASSWORD=secret
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
 
+### MSSQL Container
+MSSQL_DATABASE=homestead
+MSSQL_PASSWORD=yourStrong(!)Password
+MSSQL_PORT=1433
+
 ### MARIADB Container
 MARIADB_DATABASE=default
 MARIADB_USER=default
 MARIADB_PASSWORD=secret
 MARIADB_PORT=3306
+MARIADB_ROOT_PASSWORD=root
 
 
 ### POSTGRES Container
@@ -118,12 +128,34 @@ PMA_PASSWORD=secret
 PMA_ROOT_PASSWORD=secret
 PMA_PORT=88
 
+### ADMINER Container
+ADM_PORT=88
+
+### VARNISH Container
+VARNISH_CONFIG=/etc/varnish/default.vcl
+VARNISH_PORT=8080
+VARNISH_BACKEND_PORT=8888
+VARNISHD_PARAMS=-p default_ttl=3600 -p default_grace=3600
+
+### Varnish Proxy 1 Container
+VARNISH_PROXY1_CACHE_SIZE=128m
+VARNISH_PROXY1_BACKEND_HOST=workspace
+VARNISH_PROXY1_SERVER=SERVER1
+
+### Varnish Proxy 2 Container
+VARNISH_PROXY2_CACHE_SIZE=128m
+VARNISH_PROXY2_BACKEND_HOST=workspace
+VARNISH_PROXY2_SERVER=SERVER2
+
+### HAPROXY Container
+HAPROXY_HOST_HTTP_PORT=8085
+
 ### MISC
 # Replace with your Docker Host IP (will be appended to /etc/hosts)
-# tips: for mac,use the ip in `ipconfig getifaddr en0`  
-# or set a host ip http://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container/39026136#39026136
 DOCKER_HOST_IP=192.168.33.16
-# The Remote Interpreter entry matching name `laradock`
+# The Remote Interpreter entry matching name `laravel`
 PHP_IDE_CONFIG=serverName=laravel
+# Fix for windows users to make sure the application path works.
+COMPOSE_CONVERT_WINDOWS_PATHS=1
 
 ### to be continue neo4j mongo rethinkdb redis aerospike pgadmin ...

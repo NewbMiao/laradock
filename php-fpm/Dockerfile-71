@@ -216,6 +216,9 @@ RUN if [ ${GHOSTSCRIPT} = true ]; then \
     ghostscript \
 ;fi
 
+# DIY MY EXTENSISON
+RUN docker-php-ext-install sockets
+
 #
 #--------------------------------------------------------------------------
 # Final Touch

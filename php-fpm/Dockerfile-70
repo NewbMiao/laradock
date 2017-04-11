@@ -197,6 +197,7 @@ RUN if [ ${INSTALL_TOKENIZER} = true ]; then \
 ARG MSSQL=false
 RUN if [ ${MSSQL} = true ]; then \
 
+
     #####################################
     # Install Depenencies:
     #####################################
@@ -206,7 +207,7 @@ RUN if [ ${MSSQL} = true ]; then \
     #####################################
     #  The following steps were taken from
     #  Microsoft's github account:
-    #  https://github.com/Microsoft/msphpsql/wiki/Dockerfile-for-getting-pdo_sqlsrv-for-PHP-7.0-on-Debian-in-3-ways
+    #  https://github.com/Microsoft/msphpsql/wiki/Dockerfile-for-getting-pdo_-for-PHP-7.0-on-Debian-in-3-ways
     #####################################
 
     # Add PHP 7 repository
@@ -254,12 +255,12 @@ RUN if [ ${MSSQL} = true ]; then \
     && docker-php-ext-enable pdo_dblib && \
 
     #####################################
-    # Install sqlsrv y pdo_sqlsrv
+    # Install  y pdo_
     # extensions:
     #####################################
 
-    pecl install sqlsrv-4.0.6 && \
-    pecl install pdo_sqlsrv-4.0.6 && \
+    pecl install -4.0.6 && \
+    pecl install pdo_-4.0.6 && \
 
     #####################################
     # Set locales for the container
