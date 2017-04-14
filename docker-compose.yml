@@ -73,7 +73,7 @@ services:
       volumes_from:
         - applications
       volumes: #xdebug日志存放于logs/php-fpm目录
-        - ./logs/php-fpm/:/tmp/xdebug_log
+        - ./logs/php-fpm/:/tmp/logs
       expose:
         - "9000"
       depends_on:
