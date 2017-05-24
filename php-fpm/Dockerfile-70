@@ -249,15 +249,6 @@ RUN if [ ${INSTALL_GHOSTSCRIPT} = true ]; then \
 # DIY MY EXTENSISON
 RUN docker-php-ext-install sockets
 
-#####################################
-# swoole:
-#####################################
-ARG INSTALL_SWOOLE=false
-RUN if [ ${INSTALL_SWOOLE} = true ]; then \
-    # Install the swoole extension
-    pecl install swoole && \
-    docker-php-ext-enable swoole \
-;fi
 
 #####################################
 # yaf:
