@@ -389,6 +389,27 @@ RUN if [ ${INSTALL_MC} = true ]; then\
 ;fi
 
 #####################################
+# swoole:
+#####################################
+ARG INSTALL_SWOOLE=false
+RUN if [ ${INSTALL_SWOOLE} = true ]; then \
+    # Install the swoole extension
+    pecl install swoole && \
+    echo "extension=swoole.so" > /etc/php/7.0/cli/conf.d/swoole.ini \
+;fi
+
+#####################################
+# yaf:
+#####################################
+ARG INSTALL_YAF=false
+RUN if [ ${INSTALL_YAF} = true ]; then \
+    # Install the yaf extension
+    pecl install yaf && \
+    echo "extension=yaf.so" > /etc/php/7.0/cli/conf.d/yaf.ini &&\
+    echo "yaf.use_namespace=1" >> /etc/php/7.0/cli/conf.d/yaf.ini \
+;fi
+
+#####################################
 # Symfony:
 #####################################
 USER root

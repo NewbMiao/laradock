@@ -26,7 +26,7 @@ MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 #
 
 # install netstat
-RUN apt-get install net-tools
+RUN apt-get -y update && apt-get install -y net-tools vim
 #
 #--------------------------------------------------------------------------
 # Optional Software's Installation
@@ -320,10 +320,33 @@ ARG INSTALL_YAF=false
 RUN if [ ${INSTALL_YAF} = true ]; then \
     # Install the yaf extension
     pecl install yaf && \
-    docker-php-ext-enable yaf  \    
+    echo "extension=yaf.so" > $PHP_INI_DIR/conf.d/yaf.ini && \
+    echo "yaf.use_namespace=1" >> $PHP_INI_DIR/conf.d/yaf.ini \
 ;fi
-COPY ./yaf.ini /usr/local/etc/php/conf.d
 
+#####################################
+# xhprof:
+#####################################
+ARG INSTALL_XHPROF=false
+RUN if [ ${INSTALL_XHPROF} = true ]; then \
+    # Install the xhprof extension
+    curl -L -o /tmp/xhprof.zip https://github.com/longxinH/xhprof/archive/master.zip  && \
+    apt-get -y update && \
+    apt-get install -y unzip graphviz  \
+    && unzip /tmp/xhprof.zip -d /tmp \
+    && mv /tmp/xhprof-master /tmp/xhprof  \
+    && mkdir /tmp/xhprof/output  \
+    && ( \
+        cd /tmp/xhprof/extension \
+        && phpize \
+        && ./configure \
+        && make \
+        && make install \
+    ) \
+    && rm -rf /tmp/xhprof.zip \
+    && echo "extension=xhprof.so" > $PHP_INI_DIR/conf.d/xhprof.ini  \
+    && echo "xhprof.output_dir=/tmp/xhprof/output" >> $PHP_INI_DIR/conf.d/xhprof.ini \
+;fi
 #
 #--------------------------------------------------------------------------
 # Final Touch
