@@ -586,6 +586,21 @@ services:
         - frontend
         - backend
 
+### Golang ###################################################
+    beego:
+      build:
+        context: ./go
+        dockerfile: "Dockerfile-175" 
+      environment:
+        ENV_TASK: "dev"
+      ports:
+        - "10100:10100"
+      volumes:
+        - ${APPLICATION}/task/src/task:/go/src/task
+      networks:
+        - frontend
+        - backend
+
 
 ### Networks Setup ############################################
 

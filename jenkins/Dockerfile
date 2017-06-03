@@ -59,7 +59,7 @@ RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
 ARG DOCKER_GID=998
 
 RUN groupadd -g ${DOCKER_GID} docker \
-  && curl -sSL https://get.docker.com/ | sh \
+  && (curl -sSL https://get.docker.com/ | sh) \
   && apt-get -q autoremove \
   && apt-get -q clean -y \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin
@@ -67,7 +67,7 @@ RUN groupadd -g ${DOCKER_GID} docker \
 # Install Docker-in-Docker from git@github.com:jpetazzo/dind.git
 # RUN apt-get update -qq && apt-get install -qqy apt-transport-https ca-certificates curl lxc iptables
 # Install Docker from Docker Inc. repositories.
-RUN apt-get install -y curl && curl -sSL https://get.docker.com/ | sh
+# RUN apt-get install -y curl && curl -sSL https://get.docker.com/ | sh
 RUN usermod -aG docker jenkins
 
 # Install Docker-Compose
@@ -82,6 +82,14 @@ EXPOSE 8080
 EXPOSE 50000
 
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+RUN apt-get update && \
+    apt-get install -y sudo && \
+    rm -rf /var/lib/apt/lists/*
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+# docker for mac is use daemon group for docker 
+# use echo $(ls -al /var/run/docker.sock  | awk '{print $4}')
+RUN sudo usermod -aG daemon jenkins
 
 USER ${user}
 
@@ -100,7 +108,6 @@ COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 #COPY keys/id_rsa /var/jenkins_home/.ssh/id_rsa.pub
 #COPY keys/id_rsa /var/jenkins_home/.ssh/id_rsa
 #COPY keys/known_hosts /var/jenkins_home/.ssh/known_hosts
-#
 #USER root
 #RUN chmod 600 /var/jenkins_home/.ssh/id_rsa
 #RUN chmod 644 /var/jenkins_home/.ssh/id_rsa.pub

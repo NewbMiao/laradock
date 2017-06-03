@@ -5,3 +5,6 @@
 /.project
 .DS_Store
 .vscode
+jenkins/jenkins_home/*
+jenkins/war
+keys/
