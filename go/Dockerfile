@@ -9,6 +9,4 @@ VOLUME /go/src/task
 
 WORKDIR /go/src/task
 USER root
-# ARG JENKINS_GID=1000
-# RUN groupadd -g ${JENKINS_GID} jenkins && addgroup root jenkins && usermod -aG jenkins root
 CMD ["bee","run"]

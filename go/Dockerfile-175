@@ -1,18 +1,15 @@
 FROM golang:1.7.5-alpine
 
-RUN apk --update add git && \
+RUN apk --update add git bash && \
       rm -rf /var/cache/apk/*
 RUN go get -v github.com/astaxie/beego && go get -v github.com/beego/bee
 
 RUN go get github.com/go-sql-driver/mysql
 EXPOSE 10100
-RUN apk --update add bash && \
-      rm -rf /var/cache/apk/*
 VOLUME /go/src/task
 
 WORKDIR /go/src/task
 USER root
+ENV EXENAME=task
 ADD ./init.sh /tmp/init.sh
 ENTRYPOINT /tmp/init.sh
-# CMD ["bee","run"]
-# ENV GOPATH=''
