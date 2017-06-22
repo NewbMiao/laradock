@@ -291,6 +291,18 @@ RUN if [ ${INSTALL_XHPROF} = true ]; then \
 ;fi
 
 #####################################
+# imagick:
+#####################################
+
+ARG INSTALL_IMAGICK=false
+RUN if [ ${INSTALL_IMAGICK} = true ]; then \
+    apt-get update -yqq && \
+    apt-get install -y imagemagick libmagick++-dev && \
+    pecl install imagick && \
+    echo "extension=imagick.so" > $PHP_INI_DIR/conf.d/imagick.ini \
+;fi
+
+#####################################
 # LDAP:
 #####################################
 
