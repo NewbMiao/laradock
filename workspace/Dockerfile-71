@@ -132,7 +132,7 @@ RUN echo "" >> ~/.bashrc && \
 ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # Load the xdebug extension only with phpunit commands
-    apt-get install -y --force-yes php-xdebug && \
+    apt-get -y update && apt-get install -y --force-yes php7.1-xdebug && \
     sed -i 's/^;//g' /etc/php/7.1/cli/conf.d/20-xdebug.ini && \
     echo "alias phpunit='php -dzend_extension=xdebug.so /var/www/vendor/bin/phpunit'" >> ~/.bashrc \
 ;fi
@@ -541,7 +541,7 @@ RUN if [ ${INSTALL_IMAGICK} = true ]; then \
     apt-get update -yqq && \
     apt-get install -y imagemagick libmagick++-dev && \
     pecl install imagick && \
-    echo "extension=imagick.so" > $PHP_INI_DIR/conf.d/imagick.ini \
+    echo "extension=imagick.so" > /etc/php/7.1/cli/conf.d/imagick.ini \
 ;fi
 
 #####################################
