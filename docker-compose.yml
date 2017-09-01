@@ -611,7 +611,7 @@ services:
     beego:
       build:
         context: ./go
-        dockerfile: "Dockerfile-175" 
+        dockerfile: "Dockerfile" 
       environment:
         ENV_TASK: "dev"
       ports:
