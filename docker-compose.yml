@@ -638,10 +638,14 @@ services:
         dockerfile: "Dockerfile" 
       environment:
         ENV_TASK: "dev"
+      cap_add:
+        - SYS_PTRACE
+      security_opt:
+        - apparmor:unconfined
       ports:
         - "10100:10100"
       volumes:
-        - ${APPLICATION}/task/src/task:/go/src/task
+        - ${APPLICATION}/task/src:/go/src
       networks:
         - frontend
         - backend
